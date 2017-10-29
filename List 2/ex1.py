@@ -63,5 +63,3 @@ for i in range(a.nr_of_cryptograms):
 a.possible_letters()
 for i in range(a.nr_of_cryptograms):
     print(a.messages[i])
-
-
