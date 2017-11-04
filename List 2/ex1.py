@@ -40,7 +40,7 @@ class Crypt:
                         letters[i] += m[i]
             for j in range(self.nr_of_cryptograms):
                 if len(letters[j]) > 1:
-                    self.messages[j] = self.messages[j] + '|' + letters[j] + '|'
+                    self.messages[j] = self.messages[j] + '||' + letters[j] + '||'
                 else:
                     self.messages[j] += letters[j]
             x += 1
@@ -63,3 +63,5 @@ for i in range(a.nr_of_cryptograms):
 a.possible_letters()
 for i in range(a.nr_of_cryptograms):
     print(a.messages[i])
+
+
