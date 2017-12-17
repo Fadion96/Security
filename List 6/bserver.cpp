@@ -114,18 +114,17 @@ void bserver::generate_key_pair(int key_length, char* path_to_save) {
     const BIGNUM *d = BN_new();
     const BIGNUM *e = BN_new();
     RSA_get0_key(r, &N, &e, &d);
-
     char p[30];
     FILE *file;
     std::string s = std::to_string(key_length);
     char const *length = s.c_str();
-
+    mkdir(path_to_save,0777);
+    
     // Save public key
     memset(p, 0, sizeof p);
     strcat(p, path_to_save);
     strcat(p, "public");
     strcat(p, length);
-
     file = fopen(p , "w+");
     BN_print_fp(file, N);
     fprintf(file, "\n");
@@ -137,7 +136,6 @@ void bserver::generate_key_pair(int key_length, char* path_to_save) {
     strcat(p, path_to_save);
     strcat(p, "private");
     strcat(p, length);
-
     file = fopen(p , "w+");
     BN_print_fp(file, N);
     fprintf(file, "\n");
@@ -189,7 +187,7 @@ void bserver::communicate_with_client(char *password, int port, char *key_path) 
         perror("server_listen");
         exit(EXIT_FAILURE);
     }
-    if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
+    if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*) &addrlen))<0) {
         perror("accept");
         exit(EXIT_FAILURE);
     }

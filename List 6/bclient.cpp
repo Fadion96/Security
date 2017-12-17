@@ -52,7 +52,7 @@ BIGNUM* bclient::calculate_msg(char *msg) {
     BN_hex2bn(&m, hashed_msg_char);
     hashed = BN_bn2dec(m);
 
-    BIGNUM *one = BN_new();
+    BIGNUM *one = BN_one();
     BIGNUM *gcd = BN_new();
     BN_one(one);
 

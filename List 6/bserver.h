@@ -1,7 +1,3 @@
-//
-// Created by pandemic on 05.12.17.
-//
-
 #ifndef SIGNATURER_BSERVER_H
 #include <iostream>
 #include <fstream>
@@ -20,6 +16,7 @@
 #include <cstring>
 
 #include <unistd.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -32,6 +29,7 @@
 #include <openssl/err.h>
 #include <openssl/evp.h>
 #include <openssl/rand.h>
+
 
 #define BUFFER_SIZE 4096
 #define LENGTH 32
