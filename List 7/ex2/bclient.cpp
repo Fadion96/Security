@@ -1,4 +1,3 @@
-
 #include "bclient.h"
 
 bclient::bclient(int port, char *path, char *message) {
@@ -6,6 +5,7 @@ bclient::bclient(int port, char *path, char *message) {
     e = BN_new();
     r = BN_new();
     ctx = BN_CTX_new();
+    ctx_mont = NULL;
 
     // Load public key (N, e)
     load_publickey_from_file(path);
@@ -38,8 +38,6 @@ void bclient::load_publickey_from_file(char *path) {
     c = temp[1].c_str();
     BN_hex2bn(&e, c);
 
-    std::cout << "N: " << BN_bn2dec(N) << std::endl << std::endl;
-    std::cout << "e: " << BN_bn2dec(e) << std::endl << std::endl;
 }
 
 BIGNUM* bclient::calculate_msg(char *msg) {
@@ -66,9 +64,12 @@ BIGNUM* bclient::calculate_msg(char *msg) {
 //    std::cout << "gcd: " << BN_bn2dec(gcd) << std::endl << std::endl;
 
     BIGNUM *x = BN_new();
-    BN_mod_exp(x, r, e, N, ctx);
+    BIGNUM *const_e = BN_new();
+    BN_with_flags(const_e, e, BN_FLG_CONSTTIME);
+    BN_mod_exp_mont_consttime(x, r, const_e, N, ctx, ctx_mont);
     BN_mod_mul(x, m, x, N, ctx);
 
+    BN_free(const_e);
     BN_free(one);
     BN_free(gcd);
     BN_free(m);
@@ -131,9 +132,12 @@ void bclient::remove_signature(char *msg_to_unsign) {
     BIGNUM *s = BN_new();
     BN_hex2bn(&from, msg_to_unsign);
 
-    BN_mod_inverse(inverse, r, N, ctx);
+    BIGNUM *const_N = BN_new();
+    BN_with_flags(const_N, N, BN_FLG_CONSTTIME);
+    BN_mod_inverse(inverse, r, const_N, ctx);
     BN_mod_mul(s, inverse, from, N, ctx);
 
+    BN_free(const_N);
     // Verify msg
     if(bverfy(s))
         std::cout << "VERIFY: true" << std::endl << std::endl;
@@ -147,22 +151,25 @@ void bclient::remove_signature(char *msg_to_unsign) {
 
 bool bclient::bverfy(BIGNUM *msg) {
     // If [s^e (mod N) == hash(m)]
+    BIGNUM *const_e = BN_new();
+    BN_with_flags(const_e, e, BN_FLG_CONSTTIME);
 
     // Measure time
     auto start = std::chrono::high_resolution_clock::now();
 
     BIGNUM *h = BN_new();
-    BN_mod_exp(h, msg, e, N, ctx);
+    BN_mod_exp_mont_consttime(h, msg, const_e, N, ctx, ctx_mont);
 
+    auto end = std::chrono::high_resolution_clock::now();
     std::cout << "computed: " << BN_bn2dec(h) << std::endl;
     std::cout << "original: " << hashed << std::endl;
     int ret = strcmp(hashed, BN_bn2dec(h));
 
-    auto end = std::chrono::high_resolution_clock::now();
     std::cout << "Verifying time: ";
     std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count() << "ms" << std::endl;
 
     BN_free(h);
+    BN_free(const_e);
     return ret == 0;
 }
 

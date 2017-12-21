@@ -1,7 +1,3 @@
-//
-// Created by pandemic on 05.12.17.
-//
-
 #ifndef SIGNATURER_BSERVER_H
 #include <iostream>
 #include <fstream>
@@ -20,6 +16,7 @@
 #include <cstring>
 
 #include <unistd.h>
+#include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -33,6 +30,7 @@
 #include <openssl/evp.h>
 #include <openssl/rand.h>
 
+
 #define BUFFER_SIZE 4096
 #define LENGTH 32
 #define ITERS 5000
@@ -42,7 +40,7 @@
 class bserver {
 private:
     RSA *r = nullptr;
-    BIGNUM *num, *N, *d;
+    BIGNUM *num, *N, *d, *e;
     BN_CTX *ctx;            //for BIGNUM temp variables used by library functions
     int ret;
 
@@ -53,11 +51,11 @@ private:
     bool is_server_password_valid(char *user_pass);
     char* sign_msg(BIGNUM *msg);
     bool is_msg_in_group(BIGNUM *num);
-    void read_key_from_file(char *path);
+    void read_key_from_file(char *path, char *path2);
 public:
     bserver();
     void setup(char* path);
-    void communicate_with_client(char *password, int port, char *key_path);
+    void communicate_with_client(char *password, int port, char *key_path, char *keypub_path);
     ~bserver();
 };
 

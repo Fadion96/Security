@@ -4,6 +4,7 @@
 bserver::bserver() {
     num = BN_new();
     ctx = BN_CTX_new();
+    ctx_mont = NULL ;
 }
 
 void bserver::setup(char* path) {
@@ -18,8 +19,8 @@ void bserver::setup(char* path) {
     // Generate key pairs
     generate_key_pair(2048, path);
     generate_key_pair(4096, path);
-    generate_key_pair(8192, path);
-    generate_key_pair(16384, path);
+   // generate_key_pair(8192, path);
+    //generate_key_pair(16384, path);
 }
 
 void bserver::generate_password() {
@@ -114,18 +115,17 @@ void bserver::generate_key_pair(int key_length, char* path_to_save) {
     const BIGNUM *d = BN_new();
     const BIGNUM *e = BN_new();
     RSA_get0_key(r, &N, &e, &d);
-
     char p[30];
     FILE *file;
     std::string s = std::to_string(key_length);
     char const *length = s.c_str();
-
+    mkdir(path_to_save,0777);
+    
     // Save public key
     memset(p, 0, sizeof p);
     strcat(p, path_to_save);
     strcat(p, "public");
     strcat(p, length);
-
     file = fopen(p , "w+");
     BN_print_fp(file, N);
     fprintf(file, "\n");
@@ -137,7 +137,6 @@ void bserver::generate_key_pair(int key_length, char* path_to_save) {
     strcat(p, path_to_save);
     strcat(p, "private");
     strcat(p, length);
-
     file = fopen(p , "w+");
     BN_print_fp(file, N);
     fprintf(file, "\n");
@@ -189,7 +188,7 @@ void bserver::communicate_with_client(char *password, int port, char *key_path) 
         perror("server_listen");
         exit(EXIT_FAILURE);
     }
-    if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*)&addrlen))<0) {
+    if ((new_socket = accept(server_fd, (struct sockaddr *)&address, (socklen_t*) &addrlen))<0) {
         perror("accept");
         exit(EXIT_FAILURE);
     }
@@ -208,10 +207,10 @@ void bserver::communicate_with_client(char *password, int port, char *key_path) 
     std::cout << "Message x is in Zn." << std::endl << std::endl;
 
     // Send signed message to client
-    char* signed_msg = sign_msg(m);
     std::cout << "Signing..." << std::endl << std::endl;
-    send(new_socket, signed_msg, strlen(signed_msg), 0);
+    char* signed_msg = sign_msg(m);
     std::cout << "Signed msg sent to client: " << signed_msg << std::endl << std::endl;
+    send(new_socket, signed_msg, strlen(signed_msg), 0);
     BN_free(m);
 }
 
@@ -287,16 +286,19 @@ char* bserver::sign_msg(BIGNUM *msg_to_sign) {
     // s'= (m')^d (mod N)
 
     // Measure time
-    auto start = std::chrono::high_resolution_clock::now();
-
+    BIGNUM *const_d = BN_new();
+    BN_with_flags(const_d, d, BN_FLG_CONSTTIME);
     BIGNUM *result = BN_new();
-    BN_mod_exp(result, msg_to_sign, d, N, ctx);
 
+    auto start = std::chrono::high_resolution_clock::now();
+    BN_mod_exp_mont_consttime(result, msg_to_sign, const_d, N, ctx, ctx_mont);
     auto end = std::chrono::high_resolution_clock::now();
+
     std::cout << "Signing time: ";
     std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count() << "ms" << std::endl;
 
     char *ret = BN_bn2hex(result);
+    BN_free(const_d);
     BN_free(result);
     return ret;
 }
