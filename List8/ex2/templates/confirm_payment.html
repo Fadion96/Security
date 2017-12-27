@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+    <title>Millennium Bank</title>
+</head>
+<body>
+
+<center>
+
+    <img src="Millennium-Bank-logo.jpg" alt="Millennium Bank">
+
+    <h1>Witamy!</h1>
+
+    <p>Potwierdź przelew</p>
+
+
+  {% if account %}
+  Przelew na konto: {{ account }} <br>
+  {% endif %}
+
+  {% if name %}
+  Imie i nazwisko: {{ name }} <br>
+  {% endif %}
+
+  {% if address %}
+  Adres: {{ address }} <br>
+  {% endif %}
+
+  {% if amount %}
+  Kwota: {{ amount }} <br>
+  {% endif %}
+
+
+  {% if confirmed %}
+    <p>Przelew potwierdzony !</p>
+    <a href="index">Wróć do strony głównej</a>
+  {% else %}
+    <button onclick="confirm_payment()">Potwierdź</button>
+  {% endif %}
+</center>
+
+<script>
+function post(path, params, method) {
+    method = method || "post"; // Set method to post by default if not specified.
+
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+        }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi,
+    function(m,key,value) {
+      vars[key] = value;
+    });
+    return vars;
+}
+
+
+function confirm_payment() {
+    var account = getUrlVars()["account"];
+    var name = getUrlVars()["name"];
+    var address = getUrlVars()["address"];
+    var amount = getUrlVars()["amount"];
+
+    post("confirm_payment", {account: account, name: name, address: address, amount: amount});
+
+}
+</script>
+
+</body>
+</html>
