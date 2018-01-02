@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+<title>Millennium Bank</title>
+</head>
+<body>
+
+<center>
+
+<img src="Millennium-Bank-logo.jpg" alt="Millennium Bank">
+
+<h1>Witamy!</h1>
+<p>Wykonaj przelew:</p>
+
+Nr konta odbiorcy: <input id="account" type="number">
+<br>
+Imie i nazwisko: <input id="name" type="text">
+<br>
+Adres odiorcy: <input id="address" type="text">
+<br>
+Kwota przelewu: <input id="amount" type="number">
+<br>
+<button name="next" onclick="validate()">Dalej</button>
+<br>
+<p id="warning"></p>
+</center>
+
+<script>
+
+function post(path, params, method) {
+    method = method || "post"; // Set method to post by default if not specified.
+
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+        }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
+
+function validate() {
+    var account = document.getElementById("account").value;
+    var name = document.getElementById("name").value;
+    var address = document.getElementById("address").value;
+    var amount = document.getElementById("amount").value;
+    if (account < 1000 || amount < 1) {
+        document.getElementById("warning").innerHTML = "Zly nr konta lub kwota!";
+        return;
+    }
+    
+    post("make_payment", {account: account, name: name, address: address, amount: amount});
+}
+</script>
+
+</body>
+</html>

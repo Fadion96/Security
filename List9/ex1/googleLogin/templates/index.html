@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+    <title>Millennium Bank</title>
+</head>
+<body>
+
+<center>
+
+    <img src="Millennium-Bank-logo.jpg" alt="Millennium Bank">
+
+    <h1>Witamy!</h1>
+    <p>Co chcesz zrobić?</p>
+
+    <a href="make_payment">Zrób przelew</a>
+    <br>
+    <a href="payments_list">Sprawdz listę przelewów</a>
+    <br>
+    <a href="logout" onClick='logout()'>Wyloguj się</a>
+
+</center>
+
+<meta name="google-signin-client_id" content="278795142516-qejntfhl6osno3as77mdsf1kiomffa1g.apps.googleusercontent.com">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
+<script>
+    function logout() {
+        gapi.auth2.getAuthInstance().signOut();
+    }
+</script>
+
+</body>
+</html>

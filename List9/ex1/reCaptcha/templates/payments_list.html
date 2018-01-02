@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+    <title>Millennium Bank</title>
+</head>
+<body>
+
+<center>
+
+    <img src="Millennium-Bank-logo.jpg" alt="Millennium Bank">
+
+    <h1>Witamy!</h1>
+    <p>Lista przelewów:</p>
+
+<table style="width:100%">
+  <tr>
+    <th>Nr konta</th>
+    <th>Imię i nazwisko</th>
+    <th>Adres</th>
+    <th>Kwota</th>
+  </tr>
+    {% for payment in payments %}
+  <tr>
+    <td>
+    <center>{{ payment.account }}</center>
+    </td>
+    <td>
+        <center>
+            {{ payment.name }}
+        </center>
+    </td>
+    <td>
+        <center>
+            {{ payment.address }}
+        </center>
+    </td>
+    <td>
+        <center>
+            {{ payment.amount }}
+        </center>
+    </td>
+  </tr>
+    {% else %}
+
+    {% endfor %}
+</table>
+
+<br>
+    <a href="index">Wróć do strony głównej</a>
+
+</center>
+
+</body>
+</html>
